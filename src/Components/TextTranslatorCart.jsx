@@ -2,51 +2,51 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
 export const TextTranslatorCart = () => {
-    const languageOptions = [
-        { code: 'en', name: 'English' },
-        { code: 'id', name: 'Indonesian' },
-        { code: 'fr', name: 'French' },
-        { code: 'es', name: 'Spanish' },
-        { code: 'de', name: 'German' },
-        { code: 'ar', name: 'Arabic' },
-        { code: 'zh', name: 'Chinese' },
-        { code: 'ja', name: 'Japanese' },
-        { code: 'ko', name: 'Korean' },
-        { code: 'pt', name: 'Portuguese' },
-        { code: 'ru', name: 'Russian' },
-        { code: 'it', name: 'Italian' },
-        { code: 'tr', name: 'Turkish' },
-        { code: 'nl', name: 'Dutch' },
-        { code: 'pl', name: 'Polish' },
-        { code: 'sv', name: 'Swedish' },
-        { code: 'hi', name: 'Hindi' },
-        { code: 'bn', name: 'Bengali' },
-        { code: 'ta', name: 'Tamil' },
-        { code: 'te', name: 'Telugu' },
-        { code: 'gu', name: 'Gujarati' },
-        { code: 'kn', name: 'Kannada' },
-        { code: 'mr', name: 'Marathi' },
-        { code: 'pa', name: 'Punjabi' },
-        { code: 'or', name: 'Odia' },
-        { code: 'ml', name: 'Malayalam' },
-        { code: 'as', name: 'Assamese' },
-        { code: 'mr', name: 'Marathi' },
-        { code: 'ur', name: 'Urdu' },
-        { code: 'kok', name: 'Konkani' },
-        { code: 'bho', name: 'Bhojpuri' },
-        { code: 'mai', name: 'Maithili' },
-        { code: 'ne', name: 'Nepali' },
-        { code: 'mni', name: 'Manipuri' },
-        { code: 'sik', name: 'Sikkimese' },
-        { code: 'doi', name: 'Dogri' },
-        { code: 'kas', name: 'Kashmiri' },
-        { code: 'san', name: 'Sanskrit' },
-    ];
 
     const [text, setText] = useState('');
     const [data, setData] = useState('');
-    const [sourceLanguage, setSourceLanguage] = useState('en'); 
+    const [language, setLanguage] = useState([]);
+    const [sourceLanguage, setSourceLanguage] = useState('en');
     const [targetLanguage, setTargetLanguage] = useState('hi');
+
+
+    // console.log(language);
+
+    /*************************************************************
+    * get Method Api fetching to get each language options
+    * ************************************************************/
+
+    useEffect(() => {
+        const selectOptionType = async () => {
+
+            const options = {
+                method: 'GET',
+                url: 'https://text-translator2.p.rapidapi.com/getLanguages',
+                headers: {
+                    'X-RapidAPI-Key': '0edd3c5f5amsh76ef575b7cc6257p11e06bjsnff4359940055',
+                    'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await axios.request(options);
+                // console.log(response.data.data.languages);
+                setLanguage(response.data.data.languages)
+            } catch (error) {
+                console.error(error);
+            }
+
+        }
+
+        if (language) {
+            selectOptionType()
+        }
+    }, [language])
+
+
+    /*************************************************************
+     * post Method Api fetching to get translated text from backend
+     * ************************************************************/
 
     useEffect(() => {
         const translateText = async () => {
@@ -88,7 +88,7 @@ export const TextTranslatorCart = () => {
                     value={sourceLanguage}
                     onChange={(e) => setSourceLanguage(e.target.value)}
                 >
-                    {languageOptions.map((language, index) => (
+                    {language.map((language, index) => (
                         <option key={index} value={language.code}>{language.name}</option>
                     ))}
                 </select>
@@ -101,7 +101,7 @@ export const TextTranslatorCart = () => {
                     value={targetLanguage}
                     onChange={(e) => setTargetLanguage(e.target.value)}
                 >
-                    {languageOptions.map((language, index) => (
+                    {language.map((language, index) => (
                         <option key={index} value={language.code}>{language.name}</option>
                     ))}
                 </select>
