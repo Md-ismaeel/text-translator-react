@@ -38,9 +38,9 @@ export const TextTranslatorCart = () => {
 
         }
 
-        if (language) {
-            selectOptionType()
-        }
+
+        selectOptionType()
+
     }, [language])
 
 
