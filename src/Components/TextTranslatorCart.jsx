@@ -23,7 +23,7 @@ export const TextTranslatorCart = () => {
                 method: 'GET',
                 url: 'https://text-translator2.p.rapidapi.com/getLanguages',
                 headers: {
-                    'X-RapidAPI-Key': '0edd3c5f5amsh76ef575b7cc6257p11e06bjsnff4359940055',
+                    'X-RapidAPI-Key': '3d354d49f7msh0a665b556642d97p119884jsn2a364c9db072',
                     'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
                 }
             };
@@ -60,7 +60,7 @@ export const TextTranslatorCart = () => {
                 url: 'https://text-translator2.p.rapidapi.com/translate',
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
-                    'X-RapidAPI-Key': '0edd3c5f5amsh76ef575b7cc6257p11e06bjsnff4359940055',
+                    'X-RapidAPI-Key': '3d354d49f7msh0a665b556642d97p119884jsn2a364c9db072',
                     'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
                 },
                 data: encodedParams,
